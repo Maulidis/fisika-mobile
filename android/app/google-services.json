@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393411193134",
+    "project_id": "fisika-app-54790",
+    "storage_bucket": "fisika-app-54790.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393411193134:android:041f1abc996867bf6972bf",
+        "android_client_info": {
+          "package_name": "DissCompany.fisika_mobile_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzcSAPKxzySUVegLkfLuUBmRdNKRzaWYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
