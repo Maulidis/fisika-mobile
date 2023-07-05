@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -78,7 +79,8 @@ class AuthController extends GetxController {
     }
   }
 
-  void signup(String email, String password) async {
+  void signup(
+      String email, String password, String namaC, String alamatC) async {
     try {
       UserCredential myUser =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -95,6 +97,25 @@ class AuthController extends GetxController {
         },
         textConfirm: "Ya, Saya akan cek email.",
       );
+
+      // Mengambil instance Firestore
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // Mengambil referensi koleksi "siswa"
+      CollectionReference siswaCollection = firestore.collection('siswa');
+
+      // Membuat dokumen baru dengan ID yang dihasilkan otomatis oleh Firestore
+      DocumentReference newSiswaDoc = siswaCollection.doc();
+
+      // Menyimpan data ke dokumen siswa yang baru dibuat
+      await newSiswaDoc.set({
+        'nama': namaC,
+        'email': email,
+        'alamat': alamatC,
+      });
+
+      // Data telah berhasil disimpan ke Firestore
+      print('Data siswa berhasil disimpan ke Firestore');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

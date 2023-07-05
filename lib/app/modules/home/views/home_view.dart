@@ -15,7 +15,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       backgroundColor: kBg,
       body: DataHomeView(),
-      bottomNavigationBar: BottomNavigation(),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

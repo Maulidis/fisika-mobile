@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../constans.dart';
 import '../../../controllers/auth_controller.dart';
+import '../../detail_bab/views/detail_bab_view.dart';
 
 class DataHomeView extends GetView<HomeController> {
   final AuthController authC = Get.find<AuthController>();
@@ -20,7 +21,7 @@ class DataHomeView extends GetView<HomeController> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              color: Colors.blue,
+              color: kBlue,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20.0),
                 bottomRight: Radius.circular(20.0),
@@ -38,7 +39,13 @@ class DataHomeView extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       SvgPicture.asset("assets/icons/menu.svg"),
-                      Image.asset("assets/images/user.png"),
+                      // Image.asset("assets/images/user.png"),
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          authC.logout();
+                        },
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -53,20 +60,41 @@ class DataHomeView extends GetView<HomeController> {
                     ),
                   ),
                   Container(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
                     margin: const EdgeInsets.symmetric(vertical: 30),
                     child: TextFormField(
+                      style: const TextStyle(color: kWhite),
                       onChanged: (value) => controller.search(value),
                       decoration: InputDecoration(
-                        hintText: "Cari bab yang ingin di pelajari",
+                        filled: true,
+                        fillColor: KColorSearch,
+                        hintText: "Cari bab ",
+                        hintStyle: TextStyle(
+                          color: Colors.white
+                              .withOpacity(0.4), // Mengatur opasitas teks hint
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide.none),
+                        prefixIcon: const Opacity(
+                          opacity: 0.4, // Mengatur opasitas ikon
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.white,
+                          ),
                         ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: kBlueDark),
-                        ),
-                        prefixIcon: const Icon(Icons.search),
+                        prefixIconColor: kWhite,
                         suffixIcon: IconButton(
-                          icon: const Icon(Icons.clear),
+                          icon: const Opacity(
+                            opacity: 0.4, // Mengatur opasitas ikon
+                            child: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            ),
+                          ),
                           onPressed: () => controller.clearSearch(),
                         ),
                       ),
@@ -131,36 +159,45 @@ class DataHomeView extends GetView<HomeController> {
                           final bab = data['bab'] as String?;
                           final image = data['image'] as String?;
                           final judul = data['judul'] as String?;
-                          return Container(
-                            margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: kWhite,
-                            ),
-                            width: 161,
-                            height: 194,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.network(
-                                  image ?? '',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    bab ?? '',
-                                    textAlign: TextAlign.center,
+                          final deskripsi = data['deskripsi'] as String?;
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => DetailBabView(
+                                    databab: data,
+                                    babId: '',
+                                  ));
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: kWhite,
+                              ),
+                              width: 161,
+                              height: 194,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.network(
+                                    image ?? '',
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
                                   ),
-                                  subtitle: Text(
-                                    judul ?? '',
-                                    textAlign: TextAlign.center,
+                                  ListTile(
+                                    title: Text(
+                                      bab ?? '',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    subtitle: Text(
+                                      judul ?? '',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -193,36 +230,44 @@ class DataHomeView extends GetView<HomeController> {
                           final bab = data['bab'] as String?;
                           final image = data['image'] as String?;
                           final judul = data['judul'] as String?;
-                          return Container(
-                            margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: kWhite,
-                            ),
-                            width: 161,
-                            height: 194,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.network(
-                                  image ?? '',
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    bab ?? '',
-                                    textAlign: TextAlign.center,
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(() => DetailBabView(
+                                    databab: data,
+                                    babId: '',
+                                  ));
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: kWhite,
+                              ),
+                              width: 161,
+                              height: 194,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.network(
+                                    image ?? '',
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
                                   ),
-                                  subtitle: Text(
-                                    judul ?? '',
-                                    textAlign: TextAlign.center,
+                                  ListTile(
+                                    title: Text(
+                                      bab ?? '',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    subtitle: Text(
+                                      judul ?? '',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },

@@ -9,6 +9,10 @@ abstract class Routes {
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
   static const DETAIL_BAB = _Paths.DETAIL_BAB;
   static const DATA_HOME = _Paths.DATA_HOME;
+  static const VIDEO = _Paths.VIDEO;
+  static const FAVORIT = _Paths.FAVORIT;
+  static const LAB_VIRTUAL = _Paths.LAB_VIRTUAL;
+  static const QUIZ_FISIKA = _Paths.QUIZ_FISIKA;
 }
 
 abstract class _Paths {
@@ -19,4 +23,8 @@ abstract class _Paths {
   static const RESET_PASSWORD = '/reset-password';
   static const DETAIL_BAB = '/detail-bab';
   static const DATA_HOME = '/data-home';
+  static const VIDEO = '/video';
+  static const FAVORIT = '/favorit';
+  static const LAB_VIRTUAL = '/lab-virtual';
+  static const QUIZ_FISIKA = '/quiz-fisika';
 }
