@@ -24,7 +24,6 @@ class SignupView extends GetView<SignupController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-     
       backgroundColor: kWhite,
       body: Container(
         width: double.infinity,
@@ -96,13 +95,27 @@ class SignupView extends GetView<SignupController> {
                     SizedBox(
                       height: 20,
                     ),
-                    TextField(
-                      autocorrect: false,
-                      controller: controller.passC,
-                      decoration: InputDecoration(
+                    Obx(
+                      () => TextFormField(
+                        autocorrect: false,
+                        obscureText: controller.isPasswordVisible.value,
+                        controller: controller.passC,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'kata kunci',
-                          hintText: 'Masukkan kata kunci Anda'),
+                          labelText: 'Password',
+                          hintText: 'Masukkan Email Anda',
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              controller.togglePasswordVisibility();
+                            },
+                            child: Icon(
+                              controller.isPasswordVisible.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 20,

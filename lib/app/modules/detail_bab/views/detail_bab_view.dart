@@ -2,59 +2,70 @@ import 'package:fisika_mobile_app/app/constans.dart';
 import 'package:fisika_mobile_app/app/modules/Video/views/video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../controllers/detail_bab_controller.dart';
 
 class DetailBabView extends GetWidget<DetailBabController> {
   final dynamic databab;
-  final String babId;
 
-  DetailBabView({required this.databab, required this.babId, Key? key})
-      : super(key: key);
+  DetailBabView({required this.databab, Key? key}) : super(key: key);
 
   // Reactive state untuk mengelola status favorit
   final RxBool isFavorite = RxBool(false);
   DetailBabController get detailBabController => Get.put(DetailBabController());
   @override
   Widget build(BuildContext context) {
-    final String image = databab['image'];
-    final String judul = databab['judul'];
-    final String bab = databab['bab'];
-    final String deskripsi = databab['deskripsi'];
-    final List<dynamic> videos = databab['videos'];
-    final String judulVideo = videos[0]['judul'];
+    final String? image = databab['image'];
+    final String? judul = databab['judul'];
+    final String? bab = databab['bab'];
+    final String? deskripsi = databab['deskripsi'];
+    final List<dynamic>? videos = databab['videos'];
+    final String? judulVideo = videos?[0]['judulVideo'] as String?;
 
     // Reactive state untuk mengelola visibilitas deskripsi
     final RxBool showFullDescription = RxBool(true);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Bab'),
+        title: const Text(
+          'Detail',
+          style: TextStyle(
+            color: KColorDark,
+            fontFamily: 'Roboto',
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: kBg,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(
+            MdiIcons.arrowLeft,
+            color: KColorDark,
+            size: 25.0,
+          ),
           onPressed: () {
             Get.back();
           },
         ),
         actions: [
           IconButton(
-            icon: Obx(() => Icon(
-                  detailBabController.favoritList.contains(databab)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: detailBabController.favoritList.contains(databab)
-                      ? Colors.red
-                      : null,
-                )),
+            icon: Obx(() {
+              final isFavorite =
+                  detailBabController.favoritList.contains(databab);
+              return Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : KColorDark,
+              );
+            }),
             onPressed: () {
               if (detailBabController.favoritList.contains(databab)) {
                 detailBabController.removeFromFavorites(databab);
+                detailBabController.saveFavoritesToStorage();
                 Get.snackbar('Menu Favorit', 'Dihapus dari Favorit');
               } else {
                 detailBabController.addToFavorites(databab);
+                detailBabController.saveFavoritesToStorage();
                 Get.snackbar('Menu Favorit', 'Disimpan ke Favorit');
               }
             },
@@ -66,7 +77,7 @@ class DetailBabView extends GetWidget<DetailBabController> {
         padding: const EdgeInsets.only(
           right: 25.0,
           left: 25.0,
-          top: 25.0,
+          top: 20.0,
           bottom: 0,
         ),
         child: Column(
@@ -83,20 +94,30 @@ class DetailBabView extends GetWidget<DetailBabController> {
                 child: Column(
                   children: [
                     Image.network(
-                      image,
+                      image ?? '',
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'bab $bab',
-                      style: TextStyle(fontSize: 20),
+                      'bab ${bab ?? ''}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: KColorDark,
+                        fontFamily: 'Roboto',
+                      ),
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      judul,
-                      style: TextStyle(fontSize: 25),
+                      judul ?? '',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: KColorDark,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Roboto',
+                      ),
                     ),
                   ],
                 ),
@@ -109,8 +130,9 @@ class DetailBabView extends GetWidget<DetailBabController> {
               'Deskripsi',
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: kSubtitle,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto',
+                color: KColorDark,
               ),
             ),
             SizedBox(
@@ -125,7 +147,9 @@ class DetailBabView extends GetWidget<DetailBabController> {
                   children: [
                     Obx(() {
                       final String truncatedDescription =
-                          showFullDescription.value ? deskripsi : deskripsi;
+                          showFullDescription.value
+                              ? deskripsi ?? ''
+                              : deskripsi ?? '';
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,6 +160,9 @@ class DetailBabView extends GetWidget<DetailBabController> {
                             style: TextStyle(
                               fontSize: 16,
                               height: 1.5,
+                              color: kSubtitle,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Roboto',
                             ),
                             maxLines: showFullDescription.value ? 2 : 7,
                             overflow: TextOverflow.ellipsis,
@@ -151,7 +178,8 @@ class DetailBabView extends GetWidget<DetailBabController> {
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.blue,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Roboto',
                               ),
                             ),
                           ),
@@ -169,8 +197,9 @@ class DetailBabView extends GetWidget<DetailBabController> {
               'Pembelajaran',
               style: TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: kSubtitle,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto',
+                color: KColorDark,
               ),
             ),
             SizedBox(
@@ -178,10 +207,10 @@ class DetailBabView extends GetWidget<DetailBabController> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: videos.length,
+                itemCount: videos?.length ?? 0,
                 itemBuilder: (context, index) {
-                  final video = videos[index];
-                  final String judulVideo = video['judul'];
+                  final video = videos![index];
+                  final String? judulVideo = video['judulVideo'];
 
                   return Container(
                     decoration: BoxDecoration(
@@ -210,8 +239,13 @@ class DetailBabView extends GetWidget<DetailBabController> {
                       title: Row(
                         children: [
                           Text(
-                            judulVideo,
-                            style: TextStyle(fontSize: 16),
+                            judulVideo ?? '',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: KColorDark,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Roboto',
+                            ),
                           ),
                           Spacer(),
                           Container(

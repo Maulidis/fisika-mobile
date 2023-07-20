@@ -1,4 +1,5 @@
 import 'package:fisika_mobile_app/app/modules/home/controllers/home_controller.dart';
+import 'package:fisika_mobile_app/app/modules/profil/views/profil_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -6,15 +7,21 @@ import 'package:get/get.dart';
 import '../../../constans.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../detail_bab/views/detail_bab_view.dart';
+import '../../mydrawer/views/mydrawer_view.dart';
+import '../../profil/controllers/profil_controller.dart';
 
 class DataHomeView extends GetView<HomeController> {
   final AuthController authC = Get.find<AuthController>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  ProfilController get profileController => Get.put(ProfilController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: kBg,
+      drawer: MydrawerView(scaffoldKey: scaffoldKey),
       body: Column(
         children: <Widget>[
           //Isi dari kolum biru
@@ -38,13 +45,40 @@ class DataHomeView extends GetView<HomeController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      SvgPicture.asset("assets/icons/menu.svg"),
-                      // Image.asset("assets/images/user.png"),
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios),
-                        onPressed: () {
-                          authC.logout();
+                      InkWell(
+                        onTap: () {
+                          scaffoldKey.currentState
+                              ?.openDrawer(); // Gunakan scaffoldKey untuk membuka drawer
                         },
+                        child: SvgPicture.asset(
+                          "assets/icons/menu-modern.svg",
+                          color: kWhite,
+                          width: 34,
+                          height: 34,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          // Tambahkan logika untuk menangani aksi ketika item drawer diklik
+                          Get.to(() => ProfilView())!.then((value) {
+                            // Aksi yang akan dilakukan setelah kembali dari halaman About
+                            if (value == 'back') {
+                              Get.back();
+                            }
+                          });
+                        },
+                        child: Obx(
+                          () => CircleAvatar(
+                            radius: 20,
+                            backgroundImage:
+                                profileController.profilUrl.value.isNotEmpty
+                                    ? NetworkImage(
+                                            profileController.profilUrl.value)
+                                        as ImageProvider<Object>?
+                                    : AssetImage(
+                                        'assets/images/user.png'),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -52,11 +86,12 @@ class DataHomeView extends GetView<HomeController> {
                     height: 20,
                   ),
                   Text(
-                    "Bab Berapa Yang \nBelum Kamu Pelajari",
+                    "Bab Berapa Yang \nBelum Kamu Pelajari ?",
                     style: TextStyle(
                       fontSize: 27,
                       color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Roboto',
                     ),
                   ),
                   Container(
@@ -73,6 +108,8 @@ class DataHomeView extends GetView<HomeController> {
                         fillColor: KColorSearch,
                         hintText: "Cari bab ",
                         hintStyle: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Roboto',
                           color: Colors.white
                               .withOpacity(0.4), // Mengatur opasitas teks hint
                         ),
@@ -123,8 +160,9 @@ class DataHomeView extends GetView<HomeController> {
                     'Video Pembelajaran',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: kSubtitle,
+                      fontWeight: FontWeight.w500,
+                      color: KColorDark,
+                      fontFamily: 'Roboto',
                     ),
                   ),
                 ),
@@ -164,7 +202,6 @@ class DataHomeView extends GetView<HomeController> {
                             onTap: () {
                               Get.to(() => DetailBabView(
                                     databab: data,
-                                    babId: '',
                                   ));
                             },
                             child: Container(
@@ -234,7 +271,6 @@ class DataHomeView extends GetView<HomeController> {
                             onTap: () {
                               Get.to(() => DetailBabView(
                                     databab: data,
-                                    babId: '',
                                   ));
                             },
                             child: Container(
@@ -260,10 +296,16 @@ class DataHomeView extends GetView<HomeController> {
                                     title: Text(
                                       bab ?? '',
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                      ),
                                     ),
                                     subtitle: Text(
                                       judul ?? '',
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                      ),
                                     ),
                                   ),
                                 ],

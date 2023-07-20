@@ -2,6 +2,7 @@ import 'package:fisika_mobile_app/app/modules/data_home/views/data_home_view.dar
 import 'package:fisika_mobile_app/app/modules/detail_bab/views/detail_bab_view.dart';
 import 'package:fisika_mobile_app/app/modules/favorit/views/favorit_view.dart';
 import 'package:fisika_mobile_app/app/modules/lab_virtual/views/lab_virtual_view.dart';
+import 'package:fisika_mobile_app/app/modules/quiz_fisika/views/quiz_fisika_view.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import '../../../constans.dart';
@@ -20,7 +21,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   List<Widget> _buildScreens() {
     return [
       DataHomeView(),
-      DetailBabView(databab: null, babId: ''),
+      QuizFisikaView(),
       const FavoritView(uid: ''),
       LabVirtualView(),
     ];

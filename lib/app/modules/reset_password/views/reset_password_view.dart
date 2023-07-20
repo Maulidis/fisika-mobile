@@ -2,8 +2,10 @@ import 'package:fisika_mobile_app/app/constans.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../controllers/auth_controller.dart';
+import '../../widgets/custom_button.dart';
 import '../controllers/reset_password_controller.dart';
 
 class ResetPasswordView extends GetView<ResetPasswordController> {
@@ -15,12 +17,19 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
       appBar: AppBar(
         title: Text(
           'Reset Password',
-          style: TextStyle(color: kBlueDark),
+          style: TextStyle(
+            color: KColorDark,
+            fontFamily: 'Roboto',
+          ),
         ),
         backgroundColor: kWhite,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: kBlueDark,),
+          icon: Icon(
+            MdiIcons.arrowLeft,
+            color: KColorDark,
+            size: 25.0,
+          ),
           onPressed: () {
             Get.back();
           },
@@ -36,7 +45,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
               'Reset Password Kamu',
               style: TextStyle(
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto',
               ),
             ),
             SizedBox(height: 20),
@@ -56,9 +65,9 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
               },
             ),
             SizedBox(height: 20),
-            ElevatedButton(
+            CustomButton(
               onPressed: () => authC.resetPassword(controller.emailC.text),
-              child: Text('RESET'),
+              label: 'RESET',
             ),
             SizedBox(height: 10),
             Row(

@@ -13,6 +13,10 @@ abstract class Routes {
   static const FAVORIT = _Paths.FAVORIT;
   static const LAB_VIRTUAL = _Paths.LAB_VIRTUAL;
   static const QUIZ_FISIKA = _Paths.QUIZ_FISIKA;
+  static const ABOUT = _Paths.ABOUT;
+  static const MYDRAWER = _Paths.MYDRAWER;
+  static const PROFIL = _Paths.PROFIL;
+  static const RIWAYAT_QUIZ = _Paths.RIWAYAT_QUIZ;
 }
 
 abstract class _Paths {
@@ -27,4 +31,8 @@ abstract class _Paths {
   static const FAVORIT = '/favorit';
   static const LAB_VIRTUAL = '/lab-virtual';
   static const QUIZ_FISIKA = '/quiz-fisika';
+  static const ABOUT = '/about';
+  static const MYDRAWER = '/mydrawer';
+  static const PROFIL = '/profil';
+  static const RIWAYAT_QUIZ = '/riwayat-quiz';
 }

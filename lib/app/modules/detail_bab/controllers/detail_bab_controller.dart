@@ -1,20 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class DetailBabController extends GetxController {
-  // // Reactive state untuk menyimpan daftar favorit
+  final GetStorage _storage = GetStorage();
   final RxList<dynamic> favoritList = RxList<dynamic>([]);
 
-  final CollectionReference favoritCollection =
-      FirebaseFirestore.instance.collection('favorit');
-
-  // Method untuk menambahkan item ke daftar favorit
-  void addToFavorites(dynamic item) {
-    favoritList.add(item);
+  @override
+  void onInit() {
+    super.onInit();
+    loadFavorites();
   }
 
-  // Method untuk menghapus item dari daftar favorit
+  void loadFavorites() {
+    final favorites = _storage.read<List<dynamic>>('favorites') ?? [];
+    favoritList.assignAll(favorites);
+  }
+
+  void addToFavorites(dynamic item) {
+    favoritList.add(item);
+    _storage.write('favorites', favoritList.toList());
+  }
+
   void removeFromFavorites(dynamic item) {
     favoritList.remove(item);
+    _storage.write('favorites', favoritList.toList());
+  }
+
+  void saveFavoritesToStorage() {
+    _storage.write('favorites', favoritList.toList());
+  }
+
+  bool checkFavorite(dynamic item) {
+    return favoritList.any((favItem) => favItem['id'] == item['id']);
   }
 }

@@ -59,16 +59,17 @@ class AuthController extends GetxController {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        print('Tidak ada pengguna yang ditemukan untuk email itu.');
         Get.defaultDialog(
           title: "Terjadi Kesalahan",
-          middleText: 'No user found for that email.',
+          middleText: 'Tidak ada pengguna yang ditemukan untuk email itu.',
         );
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        print('Kata sandi yang diberikan salah untuk pengguna tersebut.');
         Get.defaultDialog(
           title: "Terjadi Kesalahan",
-          middleText: 'Wrong password provided for that user.',
+          middleText:
+              'Kata sandi yang diberikan salah untuk pengguna tersebut.',
         );
       }
     } catch (e) {
@@ -89,7 +90,7 @@ class AuthController extends GetxController {
       );
       await myUser.user!.sendEmailVerification();
       Get.defaultDialog(
-        title: "Verification Email",
+        title: "Verifikasi Email",
         middleText: "Kami telah mengirikan email verifikasi ke $email.",
         onConfirm: () {
           Get.back(); // close dialog
@@ -118,16 +119,16 @@ class AuthController extends GetxController {
       print('Data siswa berhasil disimpan ke Firestore');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        print('TKata sandi yang diberikan terlalu lemah.');
         Get.defaultDialog(
           title: "Terjadi Kesalahan",
-          middleText: 'The password provided is too weak.',
+          middleText: 'Kata sandi yang diberikan terlalu lemah.',
         );
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        print('Akun sudah ada untuk email tersebut.');
         Get.defaultDialog(
           title: "Terjadi Kesalahan",
-          middleText: 'The account already exists for that email.',
+          middleText: 'Akun sudah ada untuk email tersebut.',
         );
       }
     } catch (e) {

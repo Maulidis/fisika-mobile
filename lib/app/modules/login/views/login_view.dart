@@ -14,6 +14,7 @@ class LoginView extends GetView<LoginController> {
 
   final authC = Get.find<AuthController>();
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,10 +49,9 @@ class LoginView extends GetView<LoginController> {
                       child: Text(
                         'Masuk ke akun anda',
                         style: TextStyle(
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Roboto',
                           fontSize: 18,
-                          color: kSubtitle,
-                          fontWeight: FontWeight.w600,
+                          color: KColorDark,
                         ),
                       ),
                     ),
@@ -69,13 +69,27 @@ class LoginView extends GetView<LoginController> {
                     SizedBox(
                       height: 15,
                     ),
-                    TextField(
-                      autocorrect: false,
-                      controller: controller.passC,
-                      decoration: InputDecoration(
+                    Obx(
+                      () => TextFormField(
+                        autocorrect: false,
+                        obscureText: controller.isPasswordVisible.value,
+                        controller: controller.passC,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'kata kunci',
-                          hintText: 'Masukkan kata kunci Anda'),
+                          labelText: 'Password',
+                          hintText: 'Masukkan Email Anda',
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              controller.togglePasswordVisibility();
+                            },
+                            child: Icon(
+                              controller.isPasswordVisible.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -100,12 +114,16 @@ class LoginView extends GetView<LoginController> {
                               text: 'Belum punya akun?',
                             ),
                             TextSpan(
-                                text: ' Daftar ',
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Get.toNamed(Routes.SIGNUP);
-                                  },
-                                style: TextStyle(color: kBlue))
+                              text: ' Daftar ',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Get.toNamed(Routes.SIGNUP);
+                                },
+                              style: TextStyle(
+                                color: kBlue,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
                           ]),
                     ),
                     SizedBox(
@@ -115,8 +133,13 @@ class LoginView extends GetView<LoginController> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () => Get.toNamed(Routes.RESET_PASSWORD),
-                        child: Text("Reset Password",
-                            style: TextStyle(color: kBlue)),
+                        child: Text(
+                          "Reset Password",
+                          style: TextStyle(
+                            color: kBlue,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
                       ),
                     ),
                   ],

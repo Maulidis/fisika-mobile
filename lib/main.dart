@@ -7,6 +7,7 @@ import 'package:fisika_mobile_app/app/modules/home/controllers/home_controller.d
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app/modules/home/views/home_view.dart';
 import 'app/modules/login/controllers/login_controller.dart';
@@ -17,6 +18,7 @@ import 'app/utils/loading.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
   runApp(MyApp());
 }
 
