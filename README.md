@@ -3,6 +3,10 @@
 
 aplikasi ini bertujuan untuk pembelajaran fisika sma kelas 10 secara online.
 
+- framework flutter
+- menggunakan State Management GetX
+- menggunakan firebase
+
 # hasil screenshot
 
 
