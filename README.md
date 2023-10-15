@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # fisika_mobile_app
 
 aplikasi ini bertujuan untuk pembelajaran fisika sma kelas 10 secara online.
